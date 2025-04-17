@@ -82,7 +82,6 @@ export async function getProductBySlug(
     }
 
     const fullProduct = await getProductById(product.id);
-    console.log("Full product:", fullProduct);
     return fullProduct;
   } catch (error) {
     console.log("Error in getProductBySlug:", error);

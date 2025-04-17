@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "../../lib/context/cart-context";
 import { CartList } from "./cart-list";
+import { toast } from "sonner";
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, getTotal } = useCart();
@@ -94,12 +95,25 @@ export default function CartPage() {
             </div>
           </div>
         </div>
-        <Link
-          href="/checkout/address"
-          className="py-4 text-center rounded bg-stone-800 text-gray-200 cursor-pointer text-xl hover:opacity-85 transition duration-300"
-        >
-          Checkout
-        </Link>
+        {cart.length === 0 ? (
+          <button
+            onClick={() =>
+              toast.error(
+                "Your cart is empty. Add items to proceed to checkout."
+              )
+            }
+            className="py-4 text-center rounded bg-stone-800 text-gray-200  text-xl transition duration-300 opacity-80"
+          >
+            Checkout
+          </button>
+        ) : (
+          <Link
+            href="/checkout/address"
+            className="py-4 text-center rounded bg-stone-800 text-gray-200 cursor-pointer text-xl hover:opacity-85 transition duration-300"
+          >
+            Checkout
+          </Link>
+        )}
       </div>
     </div>
   );

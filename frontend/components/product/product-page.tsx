@@ -24,8 +24,11 @@ export default function ProductPageClient({
   recommendedProducts,
 }: ProductPageClientProps) {
 
-  const { addToCart } = useCart();
+  const { addToCart, cart, updateQuantity } = useCart();
   const {addToFavorites, isFavorite, removeFromFavorites} = useFavorite()
+
+  
+  const cartItem = cart.find((item) => item.id === product.id);
 
   const favoriteStatus = typeof isFavorite === "function" ? isFavorite(product.id) : false;
 
@@ -188,7 +191,6 @@ export default function ProductPageClient({
             </div>
 
             <div className="flex gap-4 my-8">
-              
               <button
                 onClick={() => toggleFavorite()}
                 className="flex-1 py-5  text-stone-800 rounded-xl font-semibold cursor-pointer border border-stone-800 "
@@ -199,12 +201,36 @@ export default function ProductPageClient({
                   <span>Add to Wishlist</span>
                 )}
               </button>
-              <button
-                className="flex-1 py-5 bg-stone-800 text-gray-200 rounded-xl font-semibold cursor-pointer"
-                onClick={() => addToCart(product)}
-              >
-                Add to Card
-              </button>
+              {cartItem ? (
+                <div className="flex-1 flex items-center bg-stone-800 text-gray-200 rounded-xl font-semibold gap-5 py-4 justify-center">
+                  <button
+                    onClick={() =>
+                      updateQuantity(product, cartItem.quantity - 1)
+                    }
+                    className="px-3 py-1 border-2 text-gray-300 rounded cursor-pointer hover:bg-gray-200 border-stone-300  hover:text-stone-800 transition duration-300"
+                  >
+                    -
+                  </button>
+                  <span className="text-2xl font-semibold text-gray-200">
+                    {cartItem.quantity}
+                  </span>
+                  <button
+                    onClick={() =>
+                      updateQuantity(product, cartItem.quantity + 1)
+                    }
+                    className="px-3 py-1 border-2 text-gray-300 rounded cursor-pointer hover:bg-gray-200 border-stone-300  hover:text-stone-800 transition duration-300"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="flex-1 py-5 bg-stone-800 text-gray-200 rounded-xl font-semibold cursor-pointer"
+                  onClick={() => addToCart(product)}
+                >
+                  Add to Card
+                </button>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-7">

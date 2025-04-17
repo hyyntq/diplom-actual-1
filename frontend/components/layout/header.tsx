@@ -17,7 +17,7 @@ const Header = () => {
       <div className="py-4 flex xl:gap-11 gap-8 container mx-auto  justify-between px-5">
         <Link href="/" className="flex items-center">
           <Image
-            src="/img/Logo.svg"
+            src="/img/logo.svg"
             alt="Logo"
             width={128}
             height={128}
